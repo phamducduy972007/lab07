@@ -11,10 +11,24 @@
 <body>
 	<header><h1>Rohirrim Tour Booking Confirmation</h1></header>
     <?php
-        $firstname = isset($_POST["firstname"]) ? trim($_POST["firstname"]) : "";
-        $lastname  = isset($_POST["lastname"])  ? trim($_POST["lastname"])  : "";
+        if (isset($_POST["firstname"])) {
+            $firstname = trim($_POST["firstname"]);
+        } else {
+            $firstname = "";
+        }
 
-        $species_code = isset($_POST["species"]) ? $_POST["species"] : "";
+        if (isset($_POST["lastname"])) {
+            $lastname = trim($_POST["lastname"]); 
+        } else {
+            $lastname = "";
+        }
+
+        if (isset($_POST["species"])) {
+            $species_code = $_POST["species"];
+        } else {
+            $species_code = "";
+        }
+
         $species = "";
         switch ($species_code) {
             case "M":
@@ -32,8 +46,13 @@
             default:
                 $species = "Unknown";
         }
+        
+        if (isset($_POST["age"])) {
+            $age = $_POST["age"];
+        } else {
+            $age = "";
+        }
 
-        $age = isset($_POST["age"]) ? $_POST["age"] : "";
         $tours = array();
         if (isset($_POST["accom"])) {
             $tours[] = "Accommodation";
@@ -45,31 +64,24 @@
             $tours[] = "Ten-day tour";
         }
 
-        $tour_string = "";
-        if (count($tours) > 0) {
-            if (count($tours) == 1) {
-                $tour_string = $tours[0];
-            } else if (count($tours) == 2) {
-                $tour_string = implode(" and ", $tours);
-            } else {
-                $last_tour = array_pop($tours);
-                $tour_string = implode(", ", $tours) . " and " . $last_tour;
-            }
+        if (isset($_POST["food"])) {
+            $food = $_POST["food"];
+        } else {
+            $food = "";
         }
 
-        $food = isset($_POST["food"]) ? $_POST["food"] : "";
-        $partysize = isset($_POST["partysize"]) ? $_POST["partysize"] : "";
-        
-        echo "<p>Welcome $firstname $lastname !</p>";
-        
-        if (!empty($tour_string)) {
-            echo "<p>You are now booked on the $tour_string</p>";
+        if (isset($_POST["partysize"])) {
+            $partysize = $_POST["partysize"];
+        } else {
+            $partysize = "";
         }
         
+        echo "<p>Welcome $firstname $lastname !</p>"; 
         echo "<p>Species: $species</p>";
         echo "<p>Age: $age</p>";
         echo "<p>Meal Preference: $food</p>";
         echo "<p>Number of travellers: $partysize</p>";
+
     ?>
 
 </body>
